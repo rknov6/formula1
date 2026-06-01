@@ -1,0 +1,119 @@
+{
+  "datasets": [
+    {
+      "name": "b260a71e",
+      "displayName": "Driver Standings Insights for Verstappen and Hamilton",
+      "queryLines": [
+        "USE CATALOG `formula1`;\n",
+        "USE SCHEMA `bronze`;\n",
+        "\n",
+        "select * from formula1.gold.v_driver_standings\n",
+        "where season > 2014 and driver_name in ('Max Verstappen','Lewis Hamilton')"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "d0eaf6b8",
+      "displayName": "Untitled Page",
+      "layout": [
+        {
+          "widget": {
+            "name": "032a81cf",
+            "queries": [
+              {
+                "name": "9687b6278b8447f2b67e6b5f82b1f1f7",
+                "query": {
+                  "datasetName": "b260a71e",
+                  "fields": [
+                    {
+                      "name": "season",
+                      "expression": "`season`"
+                    },
+                    {
+                      "name": "column_558377c836",
+                      "expression": "SUM(`position`)"
+                    },
+                    {
+                      "name": "driver_name",
+                      "expression": "`driver_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 0,
+              "viz_spec": {
+                "display_name": "Drivers Standings",
+                "viz_type": "CHART",
+                "serialized_options": "{\"isAggregationOn\":true,\"series\":{\"error_y\":{\"type\":\"data\",\"visible\":true},\"stacking\":null},\"coefficient\":1,\"yAxis\":[{\"title\":{\"text\":\"Position\"},\"type\":\"-\"},{\"opposite\":true,\"type\":\"-\"}],\"columnConfigurationMap\":{\"series\":{\"column\":\"driver_name\",\"id\":\"column_558377c838\"},\"x\":{\"column\":\"season\",\"id\":\"column_558377c834\"},\"y\":[{\"column\":\"position\",\"id\":\"column_558377c836\",\"transform\":\"SUM\"}]},\"alignYAxesAtZero\":true,\"direction\":{\"type\":\"counterclockwise\"},\"swappedAxes\":false,\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"legend\":{\"traceorder\":\"normal\"},\"globalSeriesType\":\"line\",\"version\":2,\"sizemode\":\"diameter\",\"seriesOptions\":{\"column_558377c836\":{\"type\":\"line\",\"yAxis\":0}},\"error_y\":{\"type\":\"data\",\"visible\":true},\"sortX\":true,\"showDataLabels\":false,\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"numberFormat\":\"0,0.[00000]\",\"dateTimeFormat\":\"DD/MM/YYYY HH:mm\",\"sortY\":true,\"valuesOptions\":{},\"xAxis\":{\"labels\":{\"enabled\":true},\"type\":\"-\"}}",
+                "query_name": "9687b6278b8447f2b67e6b5f82b1f1f7"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "f77870f7",
+            "queries": [
+              {
+                "name": "dashboards/01f15d8c300c128487ff85f51151444d/datasets/9687b6278b8447f2b67e6b5f82b1f1f7_season",
+                "query": {
+                  "datasetName": "b260a71e",
+                  "fields": [
+                    {
+                      "name": "season",
+                      "expression": "`season`"
+                    },
+                    {
+                      "name": "season_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "season",
+                    "queryName": "dashboards/01f15d8c300c128487ff85f51151444d/datasets/9687b6278b8447f2b67e6b5f82b1f1f7_season"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 4,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
