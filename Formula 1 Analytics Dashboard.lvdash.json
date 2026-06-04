@@ -62,6 +62,64 @@
           }
         ]
       }
+    },
+    {
+      "name": "14b10e2f",
+      "displayName": "v_constructors_standings",
+      "config": {
+        "version": "1.1",
+        "source": "formula1.gold.v_constructors_standings",
+        "dimensions": [
+          {
+            "name": "position",
+            "expr": "source.position",
+            "displayName": "Position"
+          },
+          {
+            "name": "season",
+            "expr": "source.season",
+            "displayName": "Season"
+          },
+          {
+            "name": "constructor_id",
+            "expr": "source.constructor_id",
+            "displayName": "Constructor Id"
+          },
+          {
+            "name": "constructor_name",
+            "expr": "source.constructor_name",
+            "displayName": "Constructor Name"
+          },
+          {
+            "name": "nationality",
+            "expr": "source.nationality",
+            "displayName": "Nationality"
+          },
+          {
+            "name": "total_points",
+            "expr": "source.total_points",
+            "displayName": "Total Points"
+          },
+          {
+            "name": "number_of_wins",
+            "expr": "source.number_of_wins",
+            "displayName": "Number Of Wins"
+          },
+          {
+            "name": "number_of_podiums",
+            "expr": "source.number_of_podiums",
+            "displayName": "Number Of Podiums"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
     }
   ],
   "pages": [
@@ -157,7 +215,7 @@
           "position": {
             "x": 0,
             "y": 2,
-            "width": 7,
+            "width": 6,
             "height": 4
           }
         },
@@ -305,7 +363,7 @@
         },
         {
           "widget": {
-            "name": "132526cd",
+            "name": "wins",
             "queries": [
               {
                 "name": "main_query",
@@ -327,6 +385,10 @@
             ],
             "spec": {
               "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Wins by Driver for Season {{ filter:103b82c3 }} "
+              },
               "widgetType": "pie",
               "encodings": {
                 "angle": {
@@ -351,18 +413,303 @@
                   }
                 },
                 "label": {
-                  "show": true,
-                  "text": {
-                    "fieldName": "sum(number_of_wins)",
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 1,
+            "width": 6,
+            "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "9e5a8efc",
+      "displayName": "Constructor Championship Standings",
+      "layout": [
+        {
+          "widget": {
+            "name": "744cd4cf",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\"><span style=\"font-family: Arial;font-size: 24px;\">Constructor Championship Standings</span></span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "95864cd9",
+            "queries": [
+              {
+                "name": "dashboards/01f15f01dbb2181fabdf3caae3d1bf6d/datasets/01f15fcdcdc9180993a0f324ee832ff8_season",
+                "query": {
+                  "datasetName": "14b10e2f",
+                  "fields": [
+                    {
+                      "name": "season",
+                      "expression": "`season`"
+                    },
+                    {
+                      "name": "season_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "INTEGER",
+                    "values": [
+                      {
+                        "value": "2025"
+                      }
+                    ]
+                  }
+                }
+              },
+              "scale": {
+                "type": "categorical",
+                "sort": {
+                  "by": "natural-order-reversed"
+                }
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "season",
+                    "queryName": "dashboards/01f15f01dbb2181fabdf3caae3d1bf6d/datasets/01f15fcdcdc9180993a0f324ee832ff8_season"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "ea7e78d5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "14b10e2f",
+                  "fields": [
+                    {
+                      "name": "constructor_name",
+                      "expression": "`constructor_name`"
+                    },
+                    {
+                      "name": "total_points",
+                      "expression": "`total_points`"
+                    },
+                    {
+                      "name": "number_of_wins",
+                      "expression": "`number_of_wins`"
+                    },
+                    {
+                      "name": "number_of_podiums",
+                      "expression": "`number_of_podiums`"
+                    },
+                    {
+                      "name": "position",
+                      "expression": "`position`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "constructor_name",
+                    "displayName": "Constructor"
+                  },
+                  {
+                    "fieldName": "total_points",
                     "format": {
                       "type": "number-plain",
-                      "abbreviation": "compact",
+                      "abbreviation": "none",
+                      "decimalPlaces": {
+                        "type": "exact",
+                        "places": 2
+                      },
+                      "hideGroupSeparator": true
+                    },
+                    "displayName": "Points"
+                  },
+                  {
+                    "fieldName": "number_of_wins",
+                    "displayName": "Wins"
+                  },
+                  {
+                    "fieldName": "number_of_podiums",
+                    "displayName": "Podiums"
+                  },
+                  {
+                    "fieldName": "position",
+                    "format": {
+                      "type": "number-plain",
+                      "abbreviation": "none",
                       "decimalPlaces": {
                         "type": "all"
-                      }
-                    },
-                    "displayName": "Wins"
+                      },
+                      "hideGroupSeparator": true
+                    }
                   }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 7,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "c8b1a215",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "14b10e2f",
+                  "fields": [
+                    {
+                      "name": "sum(total_points)",
+                      "expression": "SUM(`total_points`)"
+                    },
+                    {
+                      "name": "constructor_name",
+                      "expression": "`constructor_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(total_points)",
+                  "axis": {
+                    "hideTitle": true,
+                    "hideLabels": true,
+                    "hideGrid": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "constructor_name",
+                  "axis": {
+                    "hideTitle": true
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(total_points)",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "magma"
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "c7f380c5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "14b10e2f",
+                  "fields": [
+                    {
+                      "name": "sum(number_of_wins)",
+                      "expression": "SUM(`number_of_wins`)"
+                    },
+                    {
+                      "name": "constructor_name",
+                      "expression": "`constructor_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(number_of_wins)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "constructor_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
                 }
               }
             }
@@ -371,7 +718,7 @@
             "x": 7,
             "y": 2,
             "width": 5,
-            "height": 4
+            "height": 6
           }
         }
       ],
