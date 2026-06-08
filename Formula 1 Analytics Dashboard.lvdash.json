@@ -120,6 +120,26 @@
           }
         ]
       }
+    },
+    {
+      "name": "70551f95",
+      "displayName": "Dominant Drivers",
+      "queryLines": [
+        "with cte as (\r\n",
+        "    select \r\n",
+        "driver_name\r\n",
+        ",sum(race_starts) as race_starts\r\n",
+        ",sum(number_of_wins) as total_wins\r\n",
+        ",sum(number_of_podiums) as total_podiums\r\n",
+        ",sum(case when position = 1 then 1 else 0 end) as Championships_Won\r\n",
+        "from formula1.gold.v_driver_standings\r\n",
+        "group by driver_name\r\n",
+        ")\r\n",
+        "select *,\r\n",
+        "(championships_Won * 100) + (total_wins * 10) + (total_podiums * 3) as greatness\r\n",
+        "from cte\r\n",
+        "order by greatness desc"
+      ]
     }
   ],
   "pages": [
@@ -278,7 +298,7 @@
           "position": {
             "x": 0,
             "y": 1,
-            "width": 4,
+            "width": 3,
             "height": 1
           }
         },
@@ -339,6 +359,7 @@
                 },
                 "color": {
                   "fieldName": "total_points",
+                  "displayName": " ",
                   "scale": {
                     "type": "quantitative",
                     "colorRamp": {
@@ -672,7 +693,7 @@
         },
         {
           "widget": {
-            "name": "c7f380c5",
+            "name": "wins-by",
             "queries": [
               {
                 "name": "main_query",
@@ -694,12 +715,19 @@
             ],
             "spec": {
               "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Wins by Driver for season {{ filter:95864cd9 }} "
+              },
               "widgetType": "pie",
               "encodings": {
                 "angle": {
                   "fieldName": "sum(number_of_wins)",
                   "scale": {
                     "type": "quantitative"
+                  },
+                  "axis": {
+                    "hideTitle": true
                   }
                 },
                 "color": {
@@ -718,6 +746,90 @@
             "x": 7,
             "y": 2,
             "width": 5,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "5539707d",
+      "displayName": "Dominant Drivers",
+      "layout": [
+        {
+          "widget": {
+            "name": "fdda31d5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "70551f95",
+                  "fields": [
+                    {
+                      "name": "sum(greatness)",
+                      "expression": "SUM(`greatness`)"
+                    },
+                    {
+                      "name": "driver_name",
+                      "expression": "`driver_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(greatness)",
+                  "axis": {
+                    "hideTitle": true,
+                    "hideGrid": true,
+                    "hideLabels": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "driver_name",
+                  "axis": {
+                    "hideTitle": true
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 10
+                    },
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(greatness)",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "pinkyellowgreen"
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
             "height": 6
           }
         }
